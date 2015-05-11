@@ -16,8 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/style_color_primary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerHorizontal="true"
+            android:scaleType="center"
+            android:src="@drawable/img_toolbar_logo" />
         <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="wrap_content"
