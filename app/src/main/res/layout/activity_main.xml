@@ -26,13 +26,6 @@
             android:layout_centerHorizontal="true"
             android:scaleType="center"
             android:src="@drawable/img_toolbar_logo" />
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_centerHorizontal="true"
-            android:scaleType="center"
-            android:src="@drawable/img_toolbar_logo" />
 
     </RelativeLayout>
 
