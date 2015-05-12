@@ -10,7 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 /**
  * Created by zhaitao on 15/5/11.
  */
-public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
 
     public FeedAdapter(Context context) {
@@ -29,6 +29,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         runEnterAnimation(viewHolder.itemView, position);
+        ((CellFeedViewHolder) viewHolder).btnComments.setOnClickListener(this);
+        ((CellFeedViewHolder) viewHolder).btnComments.setTag(position);
     }
 
     // 数据的数量
@@ -37,10 +39,27 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return count;
     }
 
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnComments) {
+            if (this.onFeedItemClickListener != null) {
+                this.onFeedItemClickListener.onCommentsClick(v, (Integer) v.getTag());
+            }
+        }
+    }
+
     // 持有Item的每个元素
     public static class CellFeedViewHolder extends RecyclerView.ViewHolder {
+        public View btnComments;
+
         public CellFeedViewHolder(View itemView) {
             super(itemView);
+            this.btnComments = itemView.findViewById(R.id.btnComments);
         }
     }
 
@@ -70,5 +89,15 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         count = 10;
         animateItems = animated;
         notifyDataSetChanged();
+    }
+
+    private OnFeedItemClickListener onFeedItemClickListener;
+
+    public void setOnFeedItemClickListener(OnFeedItemClickListener onFeedItemClickListener) {
+        this.onFeedItemClickListener = onFeedItemClickListener;
+    }
+
+    public interface OnFeedItemClickListener {
+        public void onCommentsClick(View v, int position);
     }
 }

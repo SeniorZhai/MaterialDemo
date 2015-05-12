@@ -1,6 +1,7 @@
 package io.github.seniorzhai.materialdemo;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +16,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FeedAdapter.OnFeedItemClickListener {
 
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         };
         recyclerView.setLayoutManager(linearLayoutManager);
         feedAdapter = new FeedAdapter(this);
+        feedAdapter.setOnFeedItemClickListener(this);
         recyclerView.setAdapter(feedAdapter);
     }
 
@@ -117,4 +119,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCommentsClick(View v, int position) {
+        Intent intent = new Intent(this, CommentsActivity.class);
+        int[] startingLocation = new int[2];
+        v.getLocationOnScreen(startingLocation);
+        intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startingLocation[1]);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
+    }
 }
