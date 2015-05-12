@@ -34,7 +34,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 数据的数量
     @Override
     public int getItemCount() {
-        return 100;
+        return count;
     }
 
     // 持有Item的每个元素
@@ -44,22 +44,31 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private boolean animteItems = false;
+
+    private int lastAnimatedPosition = -1;
+    private boolean animateItems = false;
 
     private void runEnterAnimation(View view, int position) {
-        if (!animteItems) {
+        if (position >= 2 || !animateItems) {
             return;
         }
-        view.setTranslationY(Utils.getScreenHeight(context));
-        view.animate()
-                .translationY(0)
-                .setInterpolator(new DecelerateInterpolator(3f))
-                .setDuration(700)
-                .start();
+        if (position > lastAnimatedPosition) {
+            view.setTranslationY(Utils.getScreenHeight(context));
+            view.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(3f))
+                    .setDuration(700)
+                    .start();
+        } else {
+            animateItems = false;
+        }
     }
 
+    private int count;
+
     public void updateItems(boolean animated) {
-        animteItems = animated;
+        count = 10;
+        animateItems = animated;
         notifyDataSetChanged();
     }
 }

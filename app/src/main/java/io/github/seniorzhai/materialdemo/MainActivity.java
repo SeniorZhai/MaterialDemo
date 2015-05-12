@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-//                feedAdapter.updateItems(true);
+                feedAdapter.updateItems(true);
                 btnCreate.animate()
                         .translationY(0)
                         .setInterpolator(new OvershootInterpolator(1.f))
